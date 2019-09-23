@@ -3,5 +3,3 @@
 //note3
 //note4
 //note5
-//note6
-//note7
