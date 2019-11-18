@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Basic clicker</string>
+    <string name="button">Click</string>
+    <string name="text">Your $: 0</string>
+    <string name="buy">Купить 25%</string>
+    <string name="buy2">Купить 50%</string>
+    <string name="price">price 1: 10</string>
+    <string name="price2">price 2: 20</string>
+    <string name="ko">$ per click: 1</string>
+    <string name="admin">admin</string>
+</resources>
