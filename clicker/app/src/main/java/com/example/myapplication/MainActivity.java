@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +20,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        Integer a = intent.getIntExtra("a", 0);
+        Integer koef = intent.getIntExtra("koef", 1);
+        Integer chance = intent.getIntExtra("chance", 3);
+        Integer chance2 = intent.getIntExtra("chance2", 2);
     }
     public void onClickButtonClick(View view){
 
