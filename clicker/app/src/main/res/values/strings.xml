@@ -7,5 +7,6 @@
     <string name="price">price 1: 10</string>
     <string name="price2">price 2: 20</string>
     <string name="ko">$ per click: 1</string>
-    <string name="admin">admin</string>
+    <string name="back">back</string>
+    <string name="shop">Shop</string>
 </resources>
