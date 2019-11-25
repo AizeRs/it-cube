@@ -9,13 +9,13 @@ import android.widget.TextView;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-  private String LOG = "buy";
-  private int a = 0;
-  private int koef = 1;
-  private int price = 10;
-  private int price2 = 20;
-  private int chance = 3;
-  private int chance2 = 2;
+  public String LOG = "buy";
+  public int a = 0;
+  public int koef = 1;
+  public int price = 10;
+  public int price2 = 20;
+  public int chance = 3;
+  public int chance2 = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

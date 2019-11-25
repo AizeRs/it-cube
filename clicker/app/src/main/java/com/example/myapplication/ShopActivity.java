@@ -21,18 +21,18 @@ public class ShopActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop);
         Intent intent = getIntent();
-        Integer a = intent.getIntExtra("a", 0);
-        Integer koef = intent.getIntExtra("koef", 1);
-        Integer chance = intent.getIntExtra("chance", 3);
-        Integer chance2 = intent.getIntExtra("chance2", 2);
+        setContentView(R.layout.activity_shop);
+        a = intent.getIntExtra("a", 0);
+        koef = intent.getIntExtra("koef", 1);
+        chance = intent.getIntExtra("chance", 3);
+        chance2 = intent.getIntExtra("chance2", 2);
     }
 
     public void onClickButton25(View view){
-        TextView koefout = (TextView)findViewById(R.id.koefout);
-        TextView koefread = (TextView)findViewById(R.id.textView2);
-        TextView text = (TextView)findViewById(R.id.textt);
+        TextView koefout = findViewById(R.id.koefout);
+        TextView koefread = findViewById(R.id.textView2);
+        TextView text = findViewById(R.id.textt);
         if(a >= price){
             int b = Chance.get(chance);
             a -= price;
@@ -44,9 +44,9 @@ public class ShopActivity extends AppCompatActivity {
         }
     }
     public void onClickButton50(View view) {
-        TextView koefout = (TextView) findViewById(R.id.koefout2);
-        TextView koefread = (TextView) findViewById(R.id.textView2);
-        TextView text = (TextView) findViewById(R.id.textt);
+        TextView koefout = findViewById(R.id.koefout2);
+        TextView koefread = findViewById(R.id.textView2);
+        TextView text = findViewById(R.id.textt);
         if (a >= price2) {
             int b = Chance.get(chance2);
             a -= price2;
@@ -58,7 +58,7 @@ public class ShopActivity extends AppCompatActivity {
         }
     }
     public void onClickButtonBack(View view) {
-        Intent Gintent = new Intent(this, MainActivity.class)
+        Intent Gintent = new Intent(this, MainActivity.class);
         Gintent.putExtra("a", a);
         Gintent.putExtra("koef", koef);
         Gintent.putExtra("chance", chance);
