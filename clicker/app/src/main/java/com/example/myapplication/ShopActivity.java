@@ -1,15 +1,13 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 public class ShopActivity extends AppCompatActivity {
-
-
 
     public int price = 10;
     public int price2 = 20;
@@ -17,12 +15,14 @@ public class ShopActivity extends AppCompatActivity {
     public int koef = 0;
     public int chance = 0;
     public int chance2 = 0;
+    SharedPreferences sPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_shop);
+
         a = intent.getIntExtra("a", 0);
         koef = intent.getIntExtra("koef", 1);
         chance = intent.getIntExtra("chance", 3);
@@ -75,14 +75,20 @@ public class ShopActivity extends AppCompatActivity {
     }
     public void onClickButtonBack(View view) {
         Intent Gintent = new Intent(this, MainActivity.class);
-
-        Gintent.putExtra("a", a);
-        Gintent.putExtra("koef", koef);
-        Gintent.putExtra("chance", chance);
-        Gintent.putExtra("chance2", chance2);
-        Gintent.putExtra("price", price);
-        Gintent.putExtra("price2", price2);
-
         startActivity(Gintent);
+
+        sPref = getSharedPreferences("save", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        ed.putInt("a", a);
+        ed.putInt("koef", koef);
+        ed.putInt("chance", chance);
+        ed.putInt("chance2", chance2);
+        ed.putInt("price", price);
+        ed.putInt("price2", price2);
+
+        ed.commit();
     }
+
+
 }

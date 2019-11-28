@@ -9,4 +9,6 @@
     <string name="ko">$ per click: 1</string>
     <string name="back">back</string>
     <string name="shop">Shop</string>
+    <string name="Load">Load</string>
+    <string name="Save">Save</string>
 </resources>
