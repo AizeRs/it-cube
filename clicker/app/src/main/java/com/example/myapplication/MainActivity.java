@@ -3,7 +3,9 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         sPref = getSharedPreferences("save", MODE_PRIVATE);
 
@@ -70,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("chance2", chance2);
         intent.putExtra("price", price);
         intent.putExtra("price2", price2);
+
+        startActivity(intent);
+    }
+    public void onClickSettings(View view){
+        Intent intent = new Intent(this, SettingsActivity.class);
 
         startActivity(intent);
     }
