@@ -18,6 +18,7 @@ public class GameView extends View {
     private Sprite playerBird;
     private Sprite enemyBird;
     private int timerInterval = 30;
+    private int Vx = 500;
 
     public GameView(Context context) {
         super(context);
@@ -104,10 +105,13 @@ public class GameView extends View {
             teleportEnemy ();
             points -= 20;
         }
-//        if(points >= 100){
-//            timerInterval--;
-//            points-=100;
-//        }
+        if(points >= 100){
+            if(Vx>100){
+                Vx-=100;
+                playerBird.setVx(Vx);
+                points-=100;
+            }
+        }
         invalidate();
     }
     private void teleportEnemy () {
@@ -138,11 +142,11 @@ public class GameView extends View {
         if (eventAction == MotionEvent.ACTION_DOWN)  {
             // Движение вверх
             if (event.getY() < playerBird.getBoundingBoxRect().top) {
-                playerBird.setVy(-200);
+                playerBird.setVy(-100);
                 points--;
             }
             else if (event.getY() > (playerBird.getBoundingBoxRect().bottom)) {
-                playerBird.setVy(200);
+                playerBird.setVy(100);
                 points--;
             }
         }

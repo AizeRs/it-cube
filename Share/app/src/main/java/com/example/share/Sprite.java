@@ -16,7 +16,7 @@ public class Sprite {
     private int currentFrame;
     private double frameTime;
     private double timeForCurrentFrame;
-
+    double f = 500.0;
     private double x;
     private double y;
 
@@ -71,7 +71,7 @@ public class Sprite {
         return velocityX;
     }
     public void setVx(double velocityX) {
-        this.velocityX = velocityX;
+        f = velocityX;
     }
     public double getVy() {
         return velocityY;
@@ -112,7 +112,7 @@ public class Sprite {
             timeForCurrentFrame = timeForCurrentFrame - frameTime;
         }
 
-        x = x + velocityX * ms/500.0;
+        x = x + velocityX * ms/f;
         y = y + velocityY * ms/500.0;
     }
     public void draw (Canvas canvas) {
