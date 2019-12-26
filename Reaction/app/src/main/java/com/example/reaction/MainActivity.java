@@ -21,13 +21,11 @@ public class MainActivity extends AppCompatActivity {
     }
         public void onClickStart(View view){
             setContentView(new MyDraw(this));
-            a = random.nextInt(29);
+            a = random.nextInt(10);
             a++;
             a*=1000;
-            timer.start();
-            while (millis <= a){
-            }
-            timer.cancel();
+            SystemClock.sleep(a);
+
             setContentView(new MyDrawT(this));
             millis = 0;
             timer.start();
