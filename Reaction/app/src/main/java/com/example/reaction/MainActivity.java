@@ -3,9 +3,9 @@ package com.example.reaction;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.view.View;
-import android.view.Window;
+
+import java.util.Date;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     public int a = 0;
     public int millis = 0;
     Random random = new Random();
+    Date date = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +21,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
         public void onClickStart(View view){
+            a = random.nextInt(6500)+1000;
             setContentView(new MyDraw(this));
-            a = random.nextInt(10);
-            a++;
-            a*=1000;
-            SystemClock.sleep(a);
+            long st = date.getTime() % 1000000;
+            long now = 0;
+            while(st - now <= 1000){
+               now = date.getTime();
+            }
 
             setContentView(new MyDrawT(this));
             millis = 0;

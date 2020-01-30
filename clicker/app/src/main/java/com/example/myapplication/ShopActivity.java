@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Date;
+import java.util.Random;
+
 public class ShopActivity extends AppCompatActivity {
 
     public int price = 10;
@@ -17,6 +20,9 @@ public class ShopActivity extends AppCompatActivity {
     public int chance = 0;
     public int chance2 = 0;
     SharedPreferences sPref;
+    Random random = new Random();
+    Date date = new Date();
+    int ran = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,35 @@ public class ShopActivity extends AppCompatActivity {
         TextView koefout = findViewById(R.id.Price25Shop);
         TextView koefread = findViewById(R.id.KoefOutShop);
         TextView ShopA = findViewById(R.id.ShopA);
+        TextView resultOut = findViewById(R.id.result);
+        Chance cha = new Chance();
 
         if(a >= price){
-            int b = Chance.get(chance);
+            int res = 0;
+            int speed = 300;
+            int b = 0;
+
+            while(speed <= 2300){
+                ran = cha.get(4);
+                switch (ran){
+                    case 1:
+                        resultOut.setText("lose");
+                        break;
+                    case 0:
+                        resultOut.setText("win");
+                        break;
+                    case 100:
+                        resultOut.setText("BONUS");
+                        break;
+                }
+                long st = date.getTime() % 1000000;
+                long now = 0;
+                while(st - now <= speed){
+                    now = date.getTime();
+                }
+                speed -= 40;
+            }
+            b = ran;
             a -= price;
             koef += b;
             price += 10;
@@ -64,9 +96,10 @@ public class ShopActivity extends AppCompatActivity {
         TextView koefout = findViewById(R.id.Price50Shop);
         TextView koefread = findViewById(R.id.KoefOutShop);
         TextView ShopA = findViewById(R.id.ShopA);
+        Chance cha = new Chance();
 
         if (a >= price2) {
-            int b = Chance.get(chance2);
+            int b = cha.get(2);
             a -= price2;
             koef += b;
             price2 += 20;
@@ -76,6 +109,7 @@ public class ShopActivity extends AppCompatActivity {
             ShopA.setText("Your $: " + a);
         }
     }
+
     public void onClickButtonBack(View view) {
         Intent Gintent = new Intent(this, MainActivity.class);
         startActivity(Gintent);
@@ -92,6 +126,5 @@ public class ShopActivity extends AppCompatActivity {
 
         ed.commit();
     }
-
 
 }

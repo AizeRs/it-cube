@@ -26,6 +26,7 @@
         android:layout_marginTop="76dp"
         android:backgroundTint="#FFFFFF"
         android:foreground="@drawable/normal2"
+        android:longClickable="false"
         android:onClick="onClick"
         android:text="@string/button"
         android:textSize="50sp"

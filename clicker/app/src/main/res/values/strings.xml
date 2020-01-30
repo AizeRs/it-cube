@@ -12,5 +12,6 @@
     <string name="Load">Load</string>
     <string name="Save">Save</string>
     <string name="Restart">Restart</string>
+    <string name="result">Result</string>
     <string name="RestartText">WARNING!!! This button removes all your in-game progress(money, koef, prices and else.)</string>
 </resources>

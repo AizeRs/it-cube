@@ -10,7 +10,7 @@
         android:id="@+id/ShopA"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="28dp"
         android:text="TextView"
         android:textSize="50sp"
         app:layout_constraintBottom_toTopOf="@+id/KoefOutShop"
@@ -42,7 +42,6 @@
         android:id="@+id/Price25Shop"
         android:layout_width="140dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="40dp"
         android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buy25"
@@ -52,7 +51,6 @@
         android:id="@+id/Price50Shop"
         android:layout_width="140dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="40dp"
         android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buy50"
@@ -62,7 +60,7 @@
         android:id="@+id/KoefOutShop"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="112dp"
         android:text="TextView"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,4 +76,16 @@
         android:onClick="onClickButtonBack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="140dp"
+        android:layout_height="61dp"
+        android:text="@string/result"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/KoefOutShop"
+        app:layout_constraintVertical_bias="0.328" />
 </androidx.constraintlayout.widget.ConstraintLayout>

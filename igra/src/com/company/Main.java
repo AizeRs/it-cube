@@ -7,20 +7,28 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         Sec sec = new Sec();
-        Random random = new Random();
+        cal cal = new cal();
         Scanner in = new Scanner(System.in);
 
-        int a = random.nextInt(10);
-        a = (a + 1)*1000;
-        Thread.sleep(a);
+        cal.start();
+        sec.delay = cal.delay;
 
-        System.out.println("START");
-        sec.start();
-        while (!in.hasNextLine()){
+        while (true) {
+            System.out.println();
+            System.out.println("Which mode do you want? Bаsic or Pro?");
+            String a = in.nextLine();
+            if (a.equals("Basic") || a.equals("basic") || a.equals("BASIC")) {
+                System.out.println("Are you ready?(press enter)");
+                in.nextLine();
+                Basic.start();
+            } else {
+                if (a.equals("PRO") || a.equals("Pro") || a.equals("pro")) {
+                    System.out.println("Coming soon!");
+                } else {
+                    System.out.println("Wrong mode entered!");
+                    //System.out.println(a);
+                }
+            }
         }
-        sec.stop();
-        long seconds = sec.millis / 1000;
-        long millis = sec.millis % 1000;
-        System.out.println(seconds + "," + millis);
     }
 }

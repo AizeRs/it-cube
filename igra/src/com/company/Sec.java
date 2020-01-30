@@ -6,11 +6,12 @@ public class Sec {
     long millisStart;
     long millisStop;
     long millis;
+    long delay;
     public void start() throws InterruptedException {
         millisStart = Calendar.getInstance().getTimeInMillis() % 100000;
     }
     public void stop() throws InterruptedException {
-        long millisStop = Calendar.getInstance().getTimeInMillis() % 100000;
-        millis = millisStop - millisStart - 18;
+        millisStop = Calendar.getInstance().getTimeInMillis() % 100000;
+        millis = millisStop - millisStart - delay;
     }
 }
