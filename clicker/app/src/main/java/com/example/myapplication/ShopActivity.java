@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class ShopActivity extends AppCompatActivity {
 
@@ -29,8 +30,7 @@ public class ShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_shop);
-
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         a = intent.getIntExtra("a", 0);
         koef = intent.getIntExtra("koef", 1);
@@ -50,81 +50,95 @@ public class ShopActivity extends AppCompatActivity {
         koefread.setText("$ per click: " + koef);
     }
 
-    public void onClickButton25(View view){
+    public void onClickButton25(View view) throws InterruptedException {
         TextView koefout = findViewById(R.id.Price25Shop);
         TextView koefread = findViewById(R.id.KoefOutShop);
         TextView ShopA = findViewById(R.id.ShopA);
         TextView resultOut = findViewById(R.id.result);
         Chance cha = new Chance();
+//        for (int i = 0; i < 5; i++) {
+//            ran = cha.get(4);
+//            switch (ran){
+//                case 1:
+//                    resultOut.setText("lose");
+//                    break;
+//                case 0:
+//                    resultOut.setText("win");
+//                    break;
+//                case 20:
+//                    resultOut.setText("BONUS");
+//                    break;
+//            }
+//            TimeUnit.MILLISECONDS.sleep(1000);
+//        }
 
-        if(a >= price){
-            int res = 0;
-            int speed = 300;
-            int b = 0;
-
-            while(speed <= 2300){
+        if (a >= price) {
+            int speed = 100;
+            int b;
+            int i = 0;
+            while (i <= 50) {
                 ran = cha.get(4);
                 switch (ran){
-                    case 1:
+                    case 0:
                         resultOut.setText("lose");
                         break;
-                    case 0:
+                    case 1:
                         resultOut.setText("win");
                         break;
-                    case 100:
+                    case 20:
                         resultOut.setText("BONUS");
                         break;
                 }
-                long st = date.getTime() % 1000000;
-                long now = 0;
-                while(st - now <= speed){
-                    now = date.getTime();
-                }
-                speed -= 40;
+                    Thread.sleep(speed);
+                i++;
+                speed += speed*0.05;
             }
             b = ran;
             a -= price;
-            koef += b;
+            koef += ran;
             price += 10;
 
             koefout.setText("price 1: " + price);
             koefread.setText("$ per click: " + koef);
             ShopA.setText("Your $: " + a);
         }
-    }
-    public void onClickButton50(View view) {
-        TextView koefout = findViewById(R.id.Price50Shop);
-        TextView koefread = findViewById(R.id.KoefOutShop);
-        TextView ShopA = findViewById(R.id.ShopA);
-        Chance cha = new Chance();
-
-        if (a >= price2) {
-            int b = cha.get(2);
-            a -= price2;
-            koef += b;
-            price2 += 20;
-
-            koefout.setText("price 2: " + price2);
-            koefread.setText("$ per click: " + koef);
-            ShopA.setText("Your $: " + a);
+        else{
+            resultOut.setTextSize(20);
+            resultOut.setText("Not enough money");
         }
     }
 
-    public void onClickButtonBack(View view) {
-        Intent Gintent = new Intent(this, MainActivity.class);
-        startActivity(Gintent);
+        public void onClickButton50 (View view){
+            TextView koefout = findViewById(R.id.Price50Shop);
+            TextView koefread = findViewById(R.id.KoefOutShop);
+            TextView ShopA = findViewById(R.id.ShopA);
+            Chance cha = new Chance();
 
-        sPref = getSharedPreferences("save", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
+            if (a >= price2) {
+                int b = cha.get(2);
+                a -= price2;
+                koef += b;
+                price2 += 20;
 
-        ed.putInt("a", a);
-        ed.putInt("koef", koef);
-        ed.putInt("chance", chance);
-        ed.putInt("chance2", chance2);
-        ed.putInt("price", price);
-        ed.putInt("price2", price2);
+                koefout.setText("price 2: " + price2);
+                koefread.setText("$ per click: " + koef);
+                ShopA.setText("Your $: " + a);
+            }
+        }
 
-        ed.commit();
+        public void onClickButtonBack (View view){
+            Intent Gintent = new Intent(this, MainActivity.class);
+            startActivity(Gintent);
+            sPref = getSharedPreferences("save", MODE_PRIVATE);
+            SharedPreferences.Editor ed = sPref.edit();
+
+            ed.putInt("a", a);
+            ed.putInt("koef", koef);
+            ed.putInt("chance", chance);
+            ed.putInt("chance2", chance2);
+            ed.putInt("price", price);
+            ed.putInt("price2", price2);
+            ed.commit();
+        }
+
     }
-
-}
