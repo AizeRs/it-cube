@@ -6,23 +6,19 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class ShopActivity extends AppCompatActivity {
 
     public int price = 10;
     public int price2 = 20;
-    public int a = 0;
+    public int balance = 0;
     public int koef = 0;
     public int chance = 0;
     public int chance2 = 0;
     SharedPreferences sPref;
-    Random random = new Random();
-    Date date = new Date();
     int ran = 0;
 
     @Override
@@ -32,7 +28,7 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        a = intent.getIntExtra("a", 0);
+        balance = intent.getIntExtra("balance", 0);
         koef = intent.getIntExtra("koef", 1);
         chance = intent.getIntExtra("chance", 3);
         chance2 = intent.getIntExtra("chance2", 2);
@@ -44,7 +40,7 @@ public class ShopActivity extends AppCompatActivity {
         TextView koefread = findViewById(R.id.KoefOutShop);
         TextView ShopA = findViewById(R.id.ShopA);
 
-        ShopA.setText("Your $: " + a);
+        ShopA.setText("Your $: " + balance);
         Price25.setText("price 1: " + price);
         Price50.setText("price 2: " + price2);
         koefread.setText("$ per click: " + koef);
@@ -55,6 +51,7 @@ public class ShopActivity extends AppCompatActivity {
         TextView koefread = findViewById(R.id.KoefOutShop);
         TextView ShopA = findViewById(R.id.ShopA);
         TextView resultOut = findViewById(R.id.result);
+        ProgressBar Bar = findViewById(R.id.Bar);
         Chance cha = new Chance();
 //        for (int i = 0; i < 5; i++) {
 //            ran = cha.get(4);
@@ -72,11 +69,12 @@ public class ShopActivity extends AppCompatActivity {
 //            TimeUnit.MILLISECONDS.sleep(1000);
 //        }
 
-        if (a >= price) {
+        if (balance >= price) {
+            Bar.setVisibility(view.VISIBLE);
             int speed = 100;
-            int b;
             int i = 0;
             while (i <= 50) {
+                Bar.setProgress(Bar.getProgress()+2);
                 ran = cha.get(4);
                 switch (ran){
                     case 0:
@@ -89,18 +87,17 @@ public class ShopActivity extends AppCompatActivity {
                         resultOut.setText("BONUS");
                         break;
                 }
-                    Thread.sleep(speed);
+                Thread.sleep(speed);
                 i++;
                 speed += speed*0.05;
             }
-            b = ran;
-            a -= price;
+            balance -= price;
             koef += ran;
             price += 10;
 
             koefout.setText("price 1: " + price);
             koefread.setText("$ per click: " + koef);
-            ShopA.setText("Your $: " + a);
+            ShopA.setText("Your $: " + balance);
         }
         else{
             resultOut.setTextSize(20);
@@ -114,15 +111,15 @@ public class ShopActivity extends AppCompatActivity {
             TextView ShopA = findViewById(R.id.ShopA);
             Chance cha = new Chance();
 
-            if (a >= price2) {
+            if (balance >= price2) {
                 int b = cha.get(2);
-                a -= price2;
+                balance -= price2;
                 koef += b;
                 price2 += 20;
 
                 koefout.setText("price 2: " + price2);
                 koefread.setText("$ per click: " + koef);
-                ShopA.setText("Your $: " + a);
+                ShopA.setText("Your $: " + balance);
             }
         }
 
@@ -132,7 +129,7 @@ public class ShopActivity extends AppCompatActivity {
             sPref = getSharedPreferences("save", MODE_PRIVATE);
             SharedPreferences.Editor ed = sPref.edit();
 
-            ed.putInt("a", a);
+            ed.putInt("balance", balance);
             ed.putInt("koef", koef);
             ed.putInt("chance", chance);
             ed.putInt("chance2", chance2);

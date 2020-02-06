@@ -16,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
         sPref = getSharedPreferences("save", MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
 
-        ed.putInt("a", 0);
+        ed.putInt("balance", 0);
         ed.putInt("koef", 1);
         ed.putInt("chance", 3);
         ed.putInt("chance2", 2);
