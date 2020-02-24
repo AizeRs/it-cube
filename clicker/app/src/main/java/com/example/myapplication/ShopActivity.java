@@ -56,10 +56,10 @@ public class ShopActivity extends AppCompatActivity {
 //        for (int i = 0; i < 5; i++) {
 //            ran = cha.get(4);
 //            switch (ran){
-//                case 1:
+//                case 0:
 //                    resultOut.setText("lose");
 //                    break;
-//                case 0:
+//                case 1:
 //                    resultOut.setText("win");
 //                    break;
 //                case 20:
@@ -68,6 +68,7 @@ public class ShopActivity extends AppCompatActivity {
 //            }
 //            TimeUnit.MILLISECONDS.sleep(1000);
 //        }
+
 
         if (balance >= price) {
             Bar.setVisibility(view.VISIBLE);
@@ -85,12 +86,16 @@ public class ShopActivity extends AppCompatActivity {
                         break;
                     case 20:
                         resultOut.setText("BONUS");
+                        if(koef>=40){
+                            ran = koef/2;
+                        }
                         break;
                 }
-                Thread.sleep(speed);
+                //тут был while
                 i++;
                 speed += speed*0.05;
             }
+
             balance -= price;
             koef += ran;
             price += 10;

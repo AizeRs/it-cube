@@ -25,6 +25,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         ed.commit();
     }
+    public void onClickAdmin(View view){
+        sPref = getSharedPreferences("save", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        ed.putInt("balance", 1000000);
+        ed.commit();
+    }
     public void onClickSettingsBack(View view) {
         Intent Gintent = new Intent(this, MainActivity.class);
         startActivity(Gintent);
