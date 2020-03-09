@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         sPref = getSharedPreferences("save", MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
 
-        ed.putInt("balance", 1000000);
+        ed.putInt("balance", +1000000);
         ed.commit();
     }
     public void onClickSettingsBack(View view) {

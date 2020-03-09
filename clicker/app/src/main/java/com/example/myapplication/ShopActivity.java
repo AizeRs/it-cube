@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,10 +22,15 @@ public class ShopActivity extends AppCompatActivity {
     public int chance2 = 0;
     SharedPreferences sPref;
     int ran = 0;
+//    Dialog d = new Dialog();
+    int time = 0;
+    int speed = 100;
+    Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         Intent intent = getIntent();
         setContentView(R.layout.activity_shop);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -53,6 +60,7 @@ public class ShopActivity extends AppCompatActivity {
         TextView resultOut = findViewById(R.id.result);
         ProgressBar Bar = findViewById(R.id.Bar);
         Chance cha = new Chance();
+
 //        for (int i = 0; i < 5; i++) {
 //            ran = cha.get(4);
 //            switch (ran){
@@ -72,28 +80,11 @@ public class ShopActivity extends AppCompatActivity {
 
         if (balance >= price) {
             Bar.setVisibility(view.VISIBLE);
-            int speed = 100;
             int i = 0;
             while (i <= 50) {
                 Bar.setProgress(Bar.getProgress()+2);
-                ran = cha.get(4);
-                switch (ran){
-                    case 0:
-                        resultOut.setText("lose");
-                        break;
-                    case 1:
-                        resultOut.setText("win");
-                        break;
-                    case 20:
-                        resultOut.setText("BONUS");
-                        if(koef>=40){
-                            ran = koef/2;
-                        }
-                        break;
-                }
-                //тут был while
+                timer.start();
                 i++;
-                speed += speed*0.05;
             }
 
             balance -= price;
@@ -105,8 +96,7 @@ public class ShopActivity extends AppCompatActivity {
             ShopA.setText("Your $: " + balance);
         }
         else{
-            resultOut.setTextSize(20);
-            resultOut.setText("Not enough money");
+
         }
     }
 
@@ -126,6 +116,9 @@ public class ShopActivity extends AppCompatActivity {
                 koefread.setText("$ per click: " + koef);
                 ShopA.setText("Your $: " + balance);
             }
+            else{
+//                d.onCreateDialog(savedInstanceState);
+            }
         }
 
         public void onClickButtonBack (View view){
@@ -142,5 +135,21 @@ public class ShopActivity extends AppCompatActivity {
             ed.putInt("price2", price2);
             ed.commit();
         }
+
+    private CountDownTimer timer = new CountDownTimer(Long.MAX_VALUE,  10) {
+
+        public void onTick(long millisUntilFinished) {
+            time+=10;
+            if(time>=speed){
+                speed += speed*0.05;
+                timer.cancel();
+            }
+
+        }
+
+        public void onFinish() {
+        }
+
+    };
 
     }
