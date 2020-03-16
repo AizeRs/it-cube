@@ -25,8 +25,8 @@ public class ShopActivity extends AppCompatActivity {
     long speed = 120;
     int i = 0;
     Bundle savedInstanceState;
-    ProgressBar Bar;
-    TextView koefout;
+    TextView PriceOut;
+    TextView PriceOut2;
     TextView koefread;
     TextView ShopA;
     TextView resultOut;
@@ -42,7 +42,8 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        koefout = findViewById(R.id.Price25Shop);
+        PriceOut = findViewById(R.id.Price25Shop);
+        PriceOut2 = findViewById(R.id.Price50Shop);
         koefread = findViewById(R.id.KoefOutShop);
         ShopA = findViewById(R.id.ShopA);
         resultOut = findViewById(R.id.result);
@@ -53,7 +54,6 @@ public class ShopActivity extends AppCompatActivity {
         chance2 = intent.getIntExtra("chance2", 2);
         price = intent.getIntExtra("price", 10);
         price2 = intent.getIntExtra("price2", 20);
-        Bar = findViewById(R.id.Bar);
         TextView Price25 = findViewById(R.id.Price25Shop);
         TextView Price50 = findViewById(R.id.Price50Shop);
         TextView koefread = findViewById(R.id.KoefOutShop);
@@ -69,9 +69,10 @@ public class ShopActivity extends AppCompatActivity {
 
         if (balance >= price) {
             chann = 4;
-            Bar.setVisibility(view.VISIBLE);
             timer.start();
 
+            balance -= price;
+            price += 10;
         }
         else{
 //      тут будет диалоговое окно(не скоро)
@@ -87,6 +88,9 @@ public class ShopActivity extends AppCompatActivity {
             if (balance >= price2) {
                 chann = 2;
                 timer.start();
+
+                balance -= price2;
+                price2 += 20;
             }
             else{
 //          тут будет диалоговое окно(не скоро)
@@ -112,7 +116,7 @@ public class ShopActivity extends AppCompatActivity {
 
         public void onTick(long millisUntilFinished) {
 
-//                *= 1.05;
+
                 i++;
                 ran = cha.get(chann);
                 switch (ran){
@@ -126,18 +130,18 @@ public class ShopActivity extends AppCompatActivity {
                         resultOut.setText("BONUS");
                         break;
                 }
-                Bar.setProgress(Bar.getProgress()+2);
+
                 if(i>=50){
-                    balance -= price;
                     koef += ran;
-                    price += 10;
-                    koefout.setText("price 1: " + price);
+                    PriceOut.setText("price 1: " + price);
+                    PriceOut2.setText("price 2: " + price2);
                     koefread.setText("$ per click: " + koef);
                     ShopA.setText("Your $: " + balance);
                     timer.cancel();
                     i = 0;
                 }
         }
+
 
         public void onFinish() {
             speed = 120;
