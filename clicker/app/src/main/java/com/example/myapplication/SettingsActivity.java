@@ -2,6 +2,9 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +16,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
     }
     public void onClickRestart(View view){
+
+        onCreateDialog().show();
+
         sPref = getSharedPreferences("save", MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
 
@@ -36,4 +42,16 @@ public class SettingsActivity extends AppCompatActivity {
         Intent Gintent = new Intent(this, MainActivity.class);
         startActivity(Gintent);
     }
+    public Dialog onCreateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you really want to delete all your progress?");
+            builder.setPositiveButton("ОK!", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+
+        return builder.create();
+    }
 }
+

@@ -1,9 +1,13 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
   public int price = 10;
   public int price2 = 20;
   SharedPreferences sPref;
+  Chance cha;
+  SoundPool sp;
+  int sound;
+  int soLOL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         TextView balanceOut = findViewById(R.id.Balance);
         TextView ko = findViewById(R.id.textView2);
+        Context c = getApplicationContext();
+        sp = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        sound = sp.load(c, R.raw.click, 1);
+        soLOL = sp.load(c, R.raw.lol, 1);
 
         balanceOut.setText("Your $: " + balance);
         ko.setText("$ per click: " + koef);
+        cha = new Chance();
     }
 
     public void onStop() {
@@ -56,12 +69,31 @@ public class MainActivity extends AppCompatActivity {
         ed.commit();
     }
 
-    public void onClick(View view){
+    public void onClick(View view) {
 
         balance += koef;
 
-        TextView aout = (TextView)findViewById(R.id.Balance);
+        TextView aout = (TextView) findViewById(R.id.Balance);
         aout.setText("Your $: " + balance);
+        sp.play(sound, 1,1,1,0,1);
+        int LOL = cha.LOL();
+        switch (LOL) {
+            case 0:
+                break;
+            case 1:
+                balance = 0;
+                koef = 1;
+                price = 10;
+                price2 = 20;
+                chance = 3;
+                chance2 = 2;
+                setContentView(R.layout.activity_lol);
+                sp.play(soLOL, 1,1,1,0,1);
+                break;
+        }
+    }
+    public void onClickOk(View view){
+        setContentView(R.layout.activity_main);
     }
 
     public void onClickShop(View view){

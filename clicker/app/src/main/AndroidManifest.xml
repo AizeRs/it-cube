@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".LOL"></activity>
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".ShopActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -18,9 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4890808122843004~3964301483"/>
+            android:value="ca-app-pub-4890808122843004~3964301483" />
     </application>
 
 </manifest>

@@ -1,14 +1,48 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ShopActivity extends AppCompatActivity {
 
@@ -30,8 +64,15 @@ public class ShopActivity extends AppCompatActivity {
     TextView koefread;
     TextView ShopA;
     TextView resultOut;
-    Chance cha = new Chance();
+    Chance cha;
     int chann;
+    TextView Price25;
+    TextView Price50;
+    SoundPool sp;
+    int win;
+    int lose;
+    int jackpot;
+    Toast toast;
 
 
     @Override
@@ -54,28 +95,55 @@ public class ShopActivity extends AppCompatActivity {
         chance2 = intent.getIntExtra("chance2", 2);
         price = intent.getIntExtra("price", 10);
         price2 = intent.getIntExtra("price2", 20);
-        TextView Price25 = findViewById(R.id.Price25Shop);
-        TextView Price50 = findViewById(R.id.Price50Shop);
-        TextView koefread = findViewById(R.id.KoefOutShop);
-        TextView ShopA = findViewById(R.id.ShopA);
+        koefread = findViewById(R.id.KoefOutShop);
+        ShopA = findViewById(R.id.ShopA);
+        Price25 = findViewById(R.id.Price25Shop);
+        Price50 = findViewById(R.id.Price50Shop);
+        Context c = getApplicationContext();
 
         ShopA.setText("Your $: " + balance);
         Price25.setText("price 1: " + price);
         Price50.setText("price 2: " + price2);
         koefread.setText("$ per click: " + koef);
+        cha = new Chance();
+        sp = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+        win = sp.load(c, R.raw.win, 1);
+        lose = sp.load(c, R.raw.lose, 1);
+        jackpot = sp.load(c, R.raw.jackpot, 1);
+        toast = new Toast(c);
+        toast = Toast.makeText(c, "Not enough money!", Toast.LENGTH_LONG);
     }
 
-    public void onClickButton25(View view) throws InterruptedException {
+    public void onClickButton25(View view) {
 
         if (balance >= price) {
             chann = 4;
-            timer.start();
-
+            ran = cha.get(chann);
             balance -= price;
             price += 10;
+            koef += ran;
+            switch (ran) {
+                case 0:
+                    resultOut.setText("lose");
+                    sp.play(lose, 1,1,1,0,1);
+                    break;
+                case 1:
+                    resultOut.setText("win");
+                    sp.play(win, 1,1,1,0,1);
+                    break;
+                case 20:
+                    resultOut.setText("JACKPOT");
+                    sp.play(jackpot, 1,1,1,0,1);
+                    break;
+            }
+            ShopA.setText("Your $: " + balance);
+            Price25.setText("price 1: " + price);
+            Price50.setText("price 2: " + price2);
+            koefread.setText("$ per click: " + koef);
+
         }
         else{
-//      тут будет диалоговое окно(не скоро)
+            toast.show();
         }
     }
 
@@ -83,17 +151,33 @@ public class ShopActivity extends AppCompatActivity {
             TextView koefout = findViewById(R.id.Price50Shop);
             TextView koefread = findViewById(R.id.KoefOutShop);
             TextView ShopA = findViewById(R.id.ShopA);
-            Chance cha = new Chance();
-
             if (balance >= price2) {
                 chann = 2;
-                timer.start();
-
+                ran = cha.get(chann);
                 balance -= price2;
                 price2 += 20;
+                koef += ran;
+                switch (ran){
+                    case 0:
+                        resultOut.setText("lose");
+                        sp.play(lose, 1,1,1,0,1);
+                        break;
+                    case 1:
+                        resultOut.setText("win");
+                        sp.play(win, 1,1,1,0,1);
+                        break;
+                    case 20:
+                        resultOut.setText("JACKPOT");
+                        sp.play(jackpot, 1,1,1,0,1);
+                        break;
+                }
+                ShopA.setText("Your $: " + balance);
+                Price25.setText("price 1: " + price);
+                Price50.setText("price 2: " + price2);
+                koefread.setText("$ per click: " + koef);
             }
             else{
-//          тут будет диалоговое окно(не скоро)
+          toast.show();
             }
         }
 
@@ -112,39 +196,31 @@ public class ShopActivity extends AppCompatActivity {
             ed.commit();
         }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent Gintent = new Intent(this, MainActivity.class);
+        startActivity(Gintent);
+        sPref = getSharedPreferences("save", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        ed.putInt("balance", balance);
+        ed.putInt("koef", koef);
+        ed.putInt("chance", chance);
+        ed.putInt("chance2", chance2);
+        ed.putInt("price", price);
+        ed.putInt("price2", price2);
+        ed.commit();
+    }
+
     private CountDownTimer timer = new CountDownTimer(Long.MAX_VALUE, speed) {
 
         public void onTick(long millisUntilFinished) {
-
-
-                i++;
-                ran = cha.get(chann);
-                switch (ran){
-                    case 0:
-                        resultOut.setText("lose");
-                        break;
-                    case 1:
-                        resultOut.setText("win");
-                        break;
-                    case 20:
-                        resultOut.setText("BONUS");
-                        break;
-                }
-
-                if(i>=50){
-                    koef += ran;
-                    PriceOut.setText("price 1: " + price);
-                    PriceOut2.setText("price 2: " + price2);
-                    koefread.setText("$ per click: " + koef);
-                    ShopA.setText("Your $: " + balance);
-                    timer.cancel();
-                    i = 0;
-                }
         }
 
 
         public void onFinish() {
-            speed = 120;
+
         }
     };
 }
