@@ -9,7 +9,9 @@ import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,10 +22,14 @@ public class MainActivity extends AppCompatActivity {
   public int price = 10;
   public int price2 = 20;
   SharedPreferences sPref;
+  int ban = 0;
   Chance cha;
   SoundPool sp;
   int sound;
   int soLOL;
+  Button clButton;
+  int flag = 0;
+    TextView Tlol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         chance2 = sPref.getInt("chance2", 2);
         price = sPref.getInt("price", 10);
         price2 = sPref.getInt("price2", 20);
+        clButton = (Button) findViewById(R.id.butt);
 
         TextView balanceOut = findViewById(R.id.Balance);
         TextView ko = findViewById(R.id.textView2);
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         balanceOut.setText("Your $: " + balance);
         ko.setText("$ per click: " + koef);
         cha = new Chance();
+        timer.start();
+
     }
 
     public void onStop() {
@@ -70,26 +79,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-
-        balance += koef;
-
-        TextView aout = (TextView) findViewById(R.id.Balance);
-        aout.setText("Your $: " + balance);
-        sp.play(sound, 1,1,1,0,1);
-        int LOL = cha.LOL();
-        switch (LOL) {
-            case 0:
-                break;
-            case 1:
-                balance = 0;
+        if (flag == 1) {
+            ban++;
+            if (ban == 5) {
                 koef = 1;
+                balance = 1;
                 price = 10;
                 price2 = 20;
                 chance = 3;
                 chance2 = 2;
+                onStop();
+
                 setContentView(R.layout.activity_lol);
-                sp.play(soLOL, 1,1,1,0,1);
-                break;
+                Tlol = (TextView) findViewById(R.id.TextLol);
+                Tlol.setText("You are suspected of cheating. All your progress was removed! If you will cheat again, you will get banned!");
+            }
+        }
+        else {
+            flag = 1;
+            balance += koef;
+
+            TextView aout = (TextView) findViewById(R.id.Balance);
+            aout.setText("Your $: " + balance);
+            sp.play(sound, 1, 1, 1, 0, 1);
+            int LOL = cha.LOL();
+
+            switch (LOL) {
+                case 0:
+                    break;
+                case 1:
+                    balance = 0;
+                    koef = 1;
+                    price = 10;
+                    price2 = 20;
+                    chance = 3;
+                    chance2 = 2;
+                    setContentView(R.layout.activity_lol);
+                    Tlol = (TextView) findViewById(R.id.TextLol);
+                    Tlol.setText("YOU ARE SO LUCKY!!! the chance you will see this screen was 1 to 1.000.000! Unfortunately it\'s not a good screen and all your progress was removed. If you really want to save your progress contact me. Vk.com/AizeRs  Good Luck!");
+                    sp.play(soLOL, 1, 1, 1, 0, 1);
+                    break;
+            }
         }
     }
     public void onClickOk(View view){
@@ -112,4 +142,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+    private CountDownTimer timer = new CountDownTimer(Long.MAX_VALUE, 200) {
+
+        public void onTick(long millisUntilFinished) {
+            flag = 0;
+            ban = 0;
+        }
+
+
+        public void onFinish() {
+
+        }
+    };
 }
