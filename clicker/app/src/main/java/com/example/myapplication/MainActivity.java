@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         sound = sp.load(c, R.raw.click, 1);
         soLOL = sp.load(c, R.raw.lol, 1);
 
-        balanceOut.setText("Your $: " + balance);
+        balanceOut.setText("You have: " + balance + "$");
         ko.setText("$ per click: " + koef);
         cha = new Chance();
         timer.start();
@@ -100,26 +100,8 @@ public class MainActivity extends AppCompatActivity {
             balance += koef;
 
             TextView aout = (TextView) findViewById(R.id.Balance);
-            aout.setText("Your $: " + balance);
+            aout.setText("You have: " + balance + "$");
             sp.play(sound, 1, 1, 1, 0, 1);
-            int LOL = cha.LOL();
-
-            switch (LOL) {
-                case 0:
-                    break;
-                case 1:
-                    balance = 0;
-                    koef = 1;
-                    price = 10;
-                    price2 = 20;
-                    chance = 3;
-                    chance2 = 2;
-                    setContentView(R.layout.activity_lol);
-                    Tlol = (TextView) findViewById(R.id.TextLol);
-                    Tlol.setText("YOU ARE SO LUCKY!!! the chance you will see this screen was 1 to 1.000.000! Unfortunately it\'s not a good screen and all your progress was removed. If you really want to save your progress contact me. Vk.com/AizeRs  Good Luck!");
-                    sp.play(soLOL, 1, 1, 1, 0, 1);
-                    break;
-            }
         }
     }
     public void onClickOk(View view){

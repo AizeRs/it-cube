@@ -20,16 +20,9 @@ public class SettingsActivity extends AppCompatActivity {
         onCreateDialog().show();
 
         sPref = getSharedPreferences("save", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
 
-        ed.putInt("balance", 0);
-        ed.putInt("koef", 1);
-        ed.putInt("chance", 3);
-        ed.putInt("chance2", 2);
-        ed.putInt("price", 10);
-        ed.putInt("price2", 20);
 
-        ed.commit();
+
     }
     public void onClickAdmin(View view){
         sPref = getSharedPreferences("save", MODE_PRIVATE);
@@ -47,6 +40,21 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setMessage("Do you really want to delete all your progress?");
             builder.setPositiveButton("ОK!", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    SharedPreferences.Editor ed = sPref.edit();
+
+                    ed.putInt("balance", 0);
+                    ed.putInt("koef", 1);
+                    ed.putInt("chance", 3);
+                    ed.putInt("chance2", 2);
+                    ed.putInt("price", 10);
+                    ed.putInt("price2", 20);
+                    ed.commit();
+                    dialog.cancel();
+                }
+            });
+            builder.setNegativeButton("I changed my mind", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                 }
             });

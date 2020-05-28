@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Basic clicker</string>
     <string name="button">Click</string>
-    <string name="text">Your $: 0</string>
+    <string name="text">You have: 0$</string>
     <string name="buy">Buy 25%</string>
     <string name="buy2">Buy 50%</string>
     <string name="price">price 1: 10</string>

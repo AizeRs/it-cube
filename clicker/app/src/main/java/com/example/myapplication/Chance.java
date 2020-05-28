@@ -15,16 +15,7 @@ public class Chance {
         }
         else{
             return 0;
-        }
-    }
-    public int LOL(){
-        Random r = new Random();
-        int num = r.nextInt(999999) + 1;
-        if(num==666666){
-            return 1;
-        }
-        else {
-            return 0;
+
         }
     }
 }

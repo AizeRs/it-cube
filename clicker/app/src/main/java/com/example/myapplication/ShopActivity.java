@@ -101,7 +101,7 @@ public class ShopActivity extends AppCompatActivity {
         Price50 = findViewById(R.id.Price50Shop);
         Context c = getApplicationContext();
 
-        ShopA.setText("Your $: " + balance);
+        ShopA.setText("You have: " + balance + "$");
         Price25.setText("price 1: " + price);
         Price50.setText("price 2: " + price2);
         koefread.setText("$ per click: " + koef);
@@ -136,7 +136,7 @@ public class ShopActivity extends AppCompatActivity {
                     sp.play(jackpot, 1,1,1,0,1);
                     break;
             }
-            ShopA.setText("Your $: " + balance);
+            ShopA.setText("You have: " + balance + "$");
             Price25.setText("price 1: " + price);
             Price50.setText("price 2: " + price2);
             koefread.setText("$ per click: " + koef);
@@ -171,7 +171,7 @@ public class ShopActivity extends AppCompatActivity {
                         sp.play(jackpot, 1,1,1,0,1);
                         break;
                 }
-                ShopA.setText("Your $: " + balance);
+                ShopA.setText("You have: " + balance + "$");
                 Price25.setText("price 1: " + price);
                 Price50.setText("price 2: " + price2);
                 koefread.setText("$ per click: " + koef);
